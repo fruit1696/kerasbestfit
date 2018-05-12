@@ -1,13 +1,14 @@
-from distutils.core import setup
+from setuptools import setup, find_packages
 setup(
   name = 'kerasbestfit',
   packages = ['kerasbestfit'],
-  version = '0.1',
+  version = '0.6',
+  python_requires='>=3.0',
+  install_requires=['keras',],
   description = 'For finding the best model using Keras.',
   author = 'Russ Beuker',
   author_email = 'russbeuker@gmail.com',
   url = 'https://github.com/russbeuker/kerasbestfit',
-  download_url = 'https://github.com/russbeuker/kerasbestfit/archive/0.1.tar.gz',
-  keywords = ['keras', 'fit', 'best'], # arbitrary keywords
+  keywords = ['keras', 'fit', 'best'],
   classifiers = [],
 )
