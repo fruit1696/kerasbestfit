@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 setup(
   name = 'kerasbestfit',
   packages = ['kerasbestfit'],
-  version = '0.6',
+  version = '0.7',
   python_requires='>=3.0',
   install_requires=['keras',],
   description = 'For finding the best model using Keras.',
