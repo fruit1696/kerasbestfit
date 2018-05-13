@@ -3,9 +3,8 @@ import datetime
 
 class _FBFCheckpoint(Callback):
     def __init__(self, metric='val_acc', save_best=False, save_path=None, best_val_acc_so_far=0.0, snifftest_max_epoch=0, snifftest_min_val_acc=-1.0,
-                 progress_callback=None, show_progress=True, format_val_acc='{:1.10f}', started_at=0.0, finish_by=0.0):
+                 progress_callback=None, show_progress=True, format_val_acc='{:1.10f}', finish_by=0.0, logmsg_callback=None):
         super().__init__()
-        self.started_at = started_at
         self.finish_by = finish_by
         self.save_best = save_best
         self.save_path = save_path
@@ -23,12 +22,12 @@ class _FBFCheckpoint(Callback):
         self.saved_at_val_acc = 0
         self.snifftest_max_epoch = snifftest_max_epoch
         self.snifftest_min_val_acc = snifftest_min_val_acc
-        self.progress_callback = progress_callback
         self.snifftest_failed = False
         self.show_progress = show_progress
         self.format_val_acc = format_val_acc
         self.metric = metric
         self.expired = False
+        self.logmsg_callback=logmsg_callback
 
     def on_epoch_end(self, epoch, logs=()):
         if not self.expired:
@@ -78,11 +77,13 @@ class _FBFCheckpoint(Callback):
                     msg = ' Saved '
                 if self.snifftest_failed:
                     msg = ' Snifftest failed '
-                print(f'  e{self.current_epoch}: {self.metric}={cva} {flags} bsf={bsf} {msg}')
+                if self.logmsg_callback is not None:
+                    self.logmsg_callback(f'  e{self.current_epoch}: {self.metric}={cva} {flags} bsf={bsf} {msg}')
+
 
             if (self.finish_by != 0) and (datetime.datetime.today() >= self.finish_by):
                 fmt = "%a %b %d %H:%M:%S %Y"
-                print(f'  Finish_by time has been reached.  Fit terminated at {self.finish_by.strftime(fmt)}')
+                self.logmsg_callback(f'  Finish_by time has been reached.  Fit terminated at {self.finish_by.strftime(fmt)}')
                 self.model.stop_training = True
                 self.expired = True
 
@@ -106,8 +107,8 @@ def find_best_fit(
         save_best=False,
         save_path=None,
         best_val_acc_so_far=0,
-        started_at=0,
-        finish_by=0
+        finish_by=0,
+        logmsg_callback=None
         ):
     #started_at - (datetime) set this to the time you are starting a training session.
     #finish_by - (float) in minutes(ex: 120.0 for 2.0 hours, 2.0 for 2 minutes, 0.25 for 25 seconds.  Training will expire started_by + finish_by.
@@ -124,8 +125,8 @@ def find_best_fit(
                                  snifftest_min_val_acc=snifftest_min_val_acc,
                                  show_progress=show_progress,
                                  format_val_acc=progress_val_acc_format,
-                                 started_at=started_at,
-                                 finish_by=finish_by)
+                                 finish_by=finish_by,
+                                 logmsg_callback=logmsg_callback)
 
     # call the native fit function
     if validation_split == 0:
@@ -158,3 +159,4 @@ def find_best_fit(
     results['best_epoch'] = cbcheckpoint.best_epoch
 
     return results, cbcheckpoint.full_log
+
