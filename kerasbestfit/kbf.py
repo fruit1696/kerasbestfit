@@ -186,6 +186,7 @@ def find_best_fit(
     results['best_metric_val_so_far'] = cbcheckpoint.best_metric_val_so_far
     results['best_metric_val'] = cbcheckpoint.best_metric_val
     results['best_epoch'] = cbcheckpoint.best_epoch
+    results['final_epoch'] = cbcheckpoint.current_epoch
     results['history'] = history.history
 
     return results, cbcheckpoint.full_log
