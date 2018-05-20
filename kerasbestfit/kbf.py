@@ -3,7 +3,7 @@ import datetime
 
 class _FBFCheckpoint(Callback):
     def __init__(self, metric='val_acc', save_best=False, save_path=None, best_metric_val_so_far=0.0, snifftest_max_epoch=0, snifftest_metric_val=-1.0,
-                 progress_callback=None, show_progress=True, format_metric_val='{:1.10f}', finish_by=0.0, logmsg_callback=None):
+                 show_progress=True, format_metric_val='{:1.10f}', finish_by=0.0, logmsg_callback=None, progress_callback=None):
         super().__init__()
         self.finish_by = finish_by
         self.save_best = save_best
@@ -36,6 +36,7 @@ class _FBFCheckpoint(Callback):
         self.metric = metric
         self.expired = False
         self.logmsg_callback=logmsg_callback
+        self.progress_callback=progress_callback
 
     def save_model(self):
         # save model structure as .json and weights as .hdf5 only if snifftest has passed
@@ -116,6 +117,9 @@ class _FBFCheckpoint(Callback):
                 self.model.stop_training = True
                 self.expired = True
 
+            if self.progress_callback is not None:
+                self.progress_callback(self.current_epoch, logs.get('acc'), logs.get('loss'), logs.get('val_acc'), logs.get('val_loss'))
+
 # -----------------------------------------------------------------------------------------------------------------------
 def find_best_fit(
         model=None,
@@ -137,7 +141,8 @@ def find_best_fit(
         save_path=None,
         best_metric_val_so_far=0,
         finish_by=0,
-        logmsg_callback=None
+        logmsg_callback=None,
+        progress_callback=None
         ):
     #started_at - (datetime) set this to the time you are starting a training session.
     #finish_by - (float) in minutes(ex: 120.0 for 2.0 hours, 2.0 for 2 minutes, 0.25 for 25 seconds.  Training will expire started_by + finish_by.
@@ -155,7 +160,8 @@ def find_best_fit(
                                  show_progress=show_progress,
                                  format_metric_val=format_metric_val,
                                  finish_by=finish_by,
-                                 logmsg_callback=logmsg_callback)
+                                 logmsg_callback=logmsg_callback,
+                                 progress_callback=progress_callback)
 
     # call the native fit function
     if validation_split == 0:
