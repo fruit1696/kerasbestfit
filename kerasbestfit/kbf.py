@@ -44,9 +44,9 @@ class _FBFCheckpoint(Callback):
         self.saved_at_epoch = self.best_epoch
         self.saved_at_metric_val = self.best_metric_val
         model_json = self.model.to_json()
-        with open(self.save_path + '.json', "w") as json_file:
+        with open(self.save_path + 'model.json', "w") as json_file:
             json_file.write(model_json)
-        self.model.save_weights(self.save_path + '.hdf5')
+        self.model.save_weights(self.save_path + 'model.hdf5')
 
     def on_epoch_end(self, epoch, logs=()):
         if not self.expired:
