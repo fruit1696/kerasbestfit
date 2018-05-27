@@ -42,22 +42,21 @@ results, log = kbf.find_best_fit(model=model,
                                  
 **Output**   
 ```text
-  e0: val_acc=0.9301999956 *! bsf=0.9301999956  Saved 
-  e1: val_acc=0.9537999988 *! bsf=0.9537999988  Saved 
-  e2: val_acc=0.9638000041 *! bsf=0.9638000041  Saved 
-  e3: val_acc=0.9634000033    bsf=0.9638000041 
-  e4: val_acc=0.9638999969 *! bsf=0.9638999969  Saved 
-  e5: val_acc=0.9706999958 *! bsf=0.9706999958  Saved 
-  e6: val_acc=0.9726999968 *! bsf=0.9726999968  Saved 
-  e7: val_acc=0.9731000006 *! bsf=0.9731000006  Saved 
-  e8: val_acc=0.9724000096    bsf=0.9731000006 
-  e9: val_acc=0.9734000057 *! bsf=0.9734000057  Saved 
-  e10: val_acc=0.9739000052 *! bsf=0.9739000052  Saved 
-  e11: val_acc=0.9711999983    bsf=0.9739000052 
-  e12: val_acc=0.9712000042    bsf=0.9739000052 
-  e13: val_acc=0.9754000008 *! bsf=0.9754000008  Saved 
-  e14: val_acc=0.9736000001    bsf=0.9754000008 
-  e15: val_acc=0.9750000030    bsf=0.9754000008 
-  e16: val_acc=0.9754000008    bsf=0.9754000008 
+# here we can see that it aborted after 12 epochs since it went 3 epochs without a better result.
+# best result is 0.9745000005
+
+  e0: val_acc=0.9284999937 *! bsf=0.9284999937  Saved 
+  e1: val_acc=0.9526999980 *! bsf=0.9526999980  Saved 
+  e2: val_acc=0.9618999988 *! bsf=0.9618999988  Saved 
+  e3: val_acc=0.9645999998 *! bsf=0.9645999998  Saved 
+  e4: val_acc=0.9637999952    bsf=0.9645999998 
+  e5: val_acc=0.9687000036 *! bsf=0.9687000036  Saved 
+  e6: val_acc=0.9700999945 *! bsf=0.9700999945  Saved 
+  e7: val_acc=0.9718000025 *! bsf=0.9718000025  Saved 
+  e8: val_acc=0.9741999984 *! bsf=0.9741999984  Saved 
+  e9: val_acc=0.9745000005 *! bsf=0.9745000005  Saved 
+  e10: val_acc=0.9736999959    bsf=0.9745000005 
+  e11: val_acc=0.9718000025    bsf=0.9745000005 
+  e12: val_acc=0.9694999963    bsf=0.9745000005 
   ```
 
