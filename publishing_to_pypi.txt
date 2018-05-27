@@ -1,7 +1,10 @@
 in your packages root directory:
 
+change the version umber in setup.py
+
 python setup.py sdist
 
+#run the following.  change the 0.1 to the current version #
 twine upload -r pypitest dist/kerasbestfit-0.1.tar.gz
 
 uploading to pypitest seemed to upload it to pypi non-test and seemed to work ok
