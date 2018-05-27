@@ -4,6 +4,6 @@ The advantage to using this module is that you can just let it run and you'll fi
 
 Why did I create a new module instead of using Sklearn, T-Pot or something else to find the best fit? Because it made me dig into Keras to understand it better. Simple as that. The result is a pretty nifty function.
 
-Installation into Python
+**Installation**
 
 pip install kerasbestfit
